@@ -1,5 +1,5 @@
-sauceExtension
-==============
+Codeception: sauceExtension
+============================
 
 Codeception Extension to support automated testing via sauce labs.
 
@@ -9,7 +9,7 @@ Adds test name, build and status information to saucelabs overview.
 Installation
 --------------
 
-+ Copy the folder extensions to your project
++ Copy the folder extensions to your codeception project
 + Add the extension in your codeception.yml as shown in the example.codeception.yml
 + Configure your username and access key
 + Include the extension in your _bootstrap.php (include('extensions/sauce/SauceExtension.php');)
