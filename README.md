@@ -1,10 +1,13 @@
 sauceExtension
 ==============
 
-Codeception Extension to support automated testing via sauce labs
+Codeception Extension to support automated testing via sauce labs.
+
+Adds test name, build and status information to saucelabs overview.
+
 
 Installation
-+++++++++++++++
+--------------
 
 + Copy the folder extensions to your project
 + Add the extension in your codeception.yml as shown in the example.codeception.yml
