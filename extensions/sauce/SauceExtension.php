@@ -18,7 +18,7 @@ class SauceExtension extends \Codeception\Platform\Extension {
 	public function beforeTest(\Codeception\Event\Test $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
 		$test = $e->getTest();
-		$newestTest = $s->getJobs(0)['jobs'][0];
+		$newestTest = $this->getFirstJob($s);
 		try {
 			$build = $this->config['build'];
 		} catch (Exception $e) {
@@ -29,14 +29,25 @@ class SauceExtension extends \Codeception\Platform\Extension {
 
 	public function testFailed(\Codeception\Event\Fail $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
-		$newestTest = $s->getJobs(0)['jobs'][0];
+		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => false));
 	}
 
 	public function testSuccess(\Codeception\Event\Test $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
-		$newestTest = $s->getJobs(0)['jobs'][0];
+		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => true));
 	}
+
+	/**
+	 * Retrieve the first job from a Sauce jobs data set
+	 *
+	 * @param \SauceAPI $sauceAPI
+	 * @return array
+	 */
+	private function getFirstJob(\SauceAPI $sauceAPI)
+	{
+		$jobs = $sauceAPI->getJobs(0);
+		return $jobs['jobs'][0];
+	}
 }
-?>
