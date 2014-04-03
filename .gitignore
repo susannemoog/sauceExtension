@@ -3,4 +3,5 @@ vendor/
 tests/acceptance.suite.yml
 tests/functional.suite.yml
 tests/unit.suite.yml
+codeception.yml
 
