@@ -1,8 +1,9 @@
 <?php
 namespace Codeception\Extension;
-use Sauce\Sausage\SauceAPI;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once 'vendor/autoload.php';
+
+use Sauce\Sausage\SauceAPI;
 
 /**
  * Class SauceExtension
