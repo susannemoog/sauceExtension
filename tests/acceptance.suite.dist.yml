@@ -1,0 +1,22 @@
+# Add acceptance.suite.yml file with the following config
+# modules:
+#      config:
+#          WebDriver:
+#              host: '<saucelabs username>:<saucelabs api key>@ondemand.saucelabs.com'
+
+class_name: WebGuy
+modules:
+    enabled:
+        - WebHelper
+        - WebDriver
+    config:
+      WebDriver:
+        url: 'https://google.com/'
+        port: 80
+        wait: 1
+        browser: firefox
+        restart: true
+        capabilities:
+          unexpectedAlertBehaviour: 'accept'
+          platform: 'Windows 8.1'
+          version: '25'

@@ -12,10 +12,10 @@ Installation
 + Copy the folder extensions to your codeception project
 + Add the extension in your codeception.yml as shown in the example.codeception.yml
 + Configure your username and access key
-+ Include the extension in your _bootstrap.php (include('extensions/sauce/SauceExtension.php');)
++ Include the extension in your _bootstrap.php (require_once __DIR__ . '/../extensions/sauce/SauceExtension.php';)
 
 ```_bootstrap.php
- include('extensions/sauce/SauceExtension.php');
+ require_once __DIR__ . '/../extensions/sauce/SauceExtension.php';
 ```
 
 + Make sure you are using saucelabs as selenium server in your acceptance.suite.yml
@@ -23,17 +23,18 @@ Installation
 ```yml
 class_name: WebGuy
 modules:
-    enabled: [WebDriver]
+    enabled:
+        - WebDriver
     config:
-        WebDriver:
-            host: 'username:accesskey@ondemand.saucelabs.com'
-            port: 80
-            restart: true
-            url: 'http://www.example.com/'
-            browser: firefox
-            wait: 3
-            capabilities:
-              unexpectedAlertBehaviour: 'accept'
-              platform: 'Windows 8.1'
-              version: '25'
+      WebDriver:
+        url: 'http://ww.example.com/'
+        port: 80
+        wait: 1
+        browser: firefox
+        restart: true
+        capabilities:
+          unexpectedAlertBehaviour: 'accept'
+          platform: 'Windows 8.1'
+          version: '25'
 ```
+Note: A full example is enabled in this package. Just add your user name and key config to the codeception.yml.

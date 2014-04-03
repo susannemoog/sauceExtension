@@ -1,0 +1,27 @@
+{
+    "name": "psychomieze/sauceextension",
+    "description": "Codeception extension to support automated testing via sauce labs.",
+    "prefer-stable": true,
+    "license": "GPL-3.0",
+    "type": "codeception-extension",
+    "keywords": ["codeception", "saucelabs", "selenium"],
+    "authors": [
+        {
+            "name": "psychomieze",
+            "email": "mail@susanne-moog.de",
+            "homepage": "https://github.com/psychomieze",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "sauce/sausage": "~0.11"
+    },
+    "require-dev": {
+        "codeception/codeception": "~1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Extension\\": "extensions/sauce/"
+        }
+    }
+}

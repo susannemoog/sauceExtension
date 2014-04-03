@@ -1,5 +1,8 @@
 <?php
-require_once('SauceAPI.php');
+namespace Codeception\Extension;
+use Sauce\Sausage\SauceAPI;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * Class SauceExtension
@@ -21,7 +24,7 @@ class SauceExtension extends \Codeception\Platform\Extension {
 		$newestTest = $this->getFirstJob($s);
 		try {
 			$build = $this->config['build'];
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$build = date('d-M-Y');
 		}
 		$s->updateJob($newestTest['id'], array('name' => $test->getName(), 'build' => $build));
@@ -40,12 +43,12 @@ class SauceExtension extends \Codeception\Platform\Extension {
 	}
 
 	/**
-	 * Retrieve the first job from a Sauce jobs data set
+	 * Retrieve the first job from a SauceLabs jobs data set
 	 *
-	 * @param \SauceAPI $sauceAPI
+	 * @param SauceAPI $sauceAPI
 	 * @return array
 	 */
-	private function getFirstJob(\SauceAPI $sauceAPI)
+	private function getFirstJob(SauceAPI $sauceAPI)
 	{
 		$jobs = $sauceAPI->getJobs(0);
 		return $jobs['jobs'][0];
