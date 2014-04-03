@@ -9,16 +9,11 @@ Adds test name, build and status information to saucelabs overview.
 Installation
 --------------
 
-+ Copy the folder extensions to your codeception project
-+ Add the extension in your codeception.yml as shown in the example.codeception.yml
-+ Configure your username and access key
-+ Include the extension in your _bootstrap.php (require_once __DIR__ . '/../extensions/sauce/SauceExtension.php';)
-
-```_bootstrap.php
- require_once __DIR__ . '/../extensions/sauce/SauceExtension.php';
-```
-
-+ Make sure you are using saucelabs as selenium server in your acceptance.suite.yml
++ Add the psychomieze/sauceextension composer package to the project's composer.json.
++ Execute composer to update your environment.
++ Add the extension in the codeception.dist.yml as shown in the example.codeception.dist.yml
++ Add the SauceLabs username and access key as shown in the example.codeception.yml
++ Make sure to use SauceLabs as the selenium server in the acceptance.suite.yml
 
 ```yml
 class_name: WebGuy
@@ -27,7 +22,7 @@ modules:
         - WebDriver
     config:
       WebDriver:
-        url: 'http://ww.example.com/'
+        url: 'http://www.example.com/'
         port: 80
         wait: 1
         browser: firefox
@@ -37,4 +32,13 @@ modules:
           platform: 'Windows 8.1'
           version: '25'
 ```
-Note: A full example is enabled in this package. Just add your user name and key config to the codeception.yml.
+
+Note: A full working Codeception example is enabled in this package. Create and/or update the **codeception.yml** and **acceptance.suite.yml** within the tests/ directory with your SauceLabs **username** and **accesskey**.
+
+Note: This package uses the *dist* feature of Codeception. Configuration information that is safe to distribute to other developers go in a file with *dist* in the name. Secret files are ignored by the repo and only available locally.
+
+| Secret | Public |
+|:-------:|:-------------:|
+| codeception.yml | codeception.dist.yml |
+
+Refer to this documentation [here](http://codeception.com/docs/02-GettingStarted#Configuration) for further explanation.
