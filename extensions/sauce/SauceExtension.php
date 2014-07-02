@@ -19,7 +19,7 @@ class SauceExtension extends \Codeception\Platform\Extension {
 		'test.success' => 'testSuccess',
 	);
 
-	public function beforeTest(\Codeception\Event\Test $e) {
+	public function beforeTest(\Codeception\Event\TestEvent $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
 		$test = $e->getTest();
 		$newestTest = $this->getFirstJob($s);
@@ -31,13 +31,13 @@ class SauceExtension extends \Codeception\Platform\Extension {
 		$s->updateJob($newestTest['id'], array('name' => $test->getName(), 'build' => $build));
 	}
 
-	public function testFailed(\Codeception\Event\Fail $e) {
+	public function testFailed(\Codeception\Event\FailEvent $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
 		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => false));
 	}
 
-	public function testSuccess(\Codeception\Event\Test $e) {
+	public function testSuccess(\Codeception\Event\TestEvent $e) {
 		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
 		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => true));
