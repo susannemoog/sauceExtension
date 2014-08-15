@@ -20,7 +20,9 @@ class SauceExtension extends \Codeception\Platform\Extension {
 	);
 
 	public function beforeTest(\Codeception\Event\TestEvent $e) {
-		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
+		$username = ($this->config['env_variables'] === true ? getenv('SAUCE_USERNAME') : $this->config['username']);
+		$accesskey = ($this->config['env_variables'] === true ? getenv('SAUCE_ACCESS_KEY') : $this->config['accesskey']);
+		$s = new SauceAPI($username, $accesskey);
 		$test = $e->getTest();
 		$newestTest = $this->getFirstJob($s);
 		try {
@@ -32,13 +34,17 @@ class SauceExtension extends \Codeception\Platform\Extension {
 	}
 
 	public function testFailed(\Codeception\Event\FailEvent $e) {
-		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
+		$username = ($this->config['env_variables'] === true ? getenv('SAUCE_USERNAME') : $this->config['username']);
+		$accesskey = ($this->config['env_variables'] === true ? getenv('SAUCE_ACCESS_KEY') : $this->config['accesskey']);
+		$s = new SauceAPI($username, $accesskey);
 		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => false));
 	}
 
 	public function testSuccess(\Codeception\Event\TestEvent $e) {
-		$s = new SauceAPI($this->config['username'], $this->config['accesskey']);
+		$username = ($this->config['env_variables'] === true ? getenv('SAUCE_USERNAME') : $this->config['username']);
+		$accesskey = ($this->config['env_variables'] === true ? getenv('SAUCE_ACCESS_KEY') : $this->config['accesskey']);
+		$s = new SauceAPI($username, $accesskey);
 		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => true));
 	}
