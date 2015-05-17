@@ -30,7 +30,8 @@ class SauceExtension extends \Codeception\Platform\Extension {
 		} catch (\Exception $e) {
 			$build = date('d-M-Y');
 		}
-		$s->updateJob($newestTest['id'], array('name' => $test->getName(), 'build' => $build));
+		$metadata = $this->getMetaData($test);
+		$s->updateJob($newestTest['id'], array('name' => $test->getName(), 'build' => $build, 'tags' => $metadata['tags'], 'custom-data' => $metadata['custom-data']));
 	}
 
 	public function testFailed(\Codeception\Event\FailEvent $e) {
@@ -47,6 +48,28 @@ class SauceExtension extends \Codeception\Platform\Extension {
 		$s = new SauceAPI($username, $accesskey);
 		$newestTest = $this->getFirstJob($s);
 		$s->updateJob($newestTest['id'], array('passed' => true));
+	}
+
+	/**
+	 * Gather metadata about the current test to send to saucelabs, making it easier to filter tests
+	 * @return array
+	 */
+	protected function getMetaData($test)
+	{
+		$metadata = array(
+			// Default tags from config
+			'tags' => isset($this->config['tags']) ? explode(",", $this->config['tags']) : array(),
+			// Default custom data is empty
+			'custom-data' => array(),
+		);
+
+		// Tag with the current test string reference
+		$metadata['tags'][] = "test:" . $test->toString();
+
+		// Add codeception runtime options to custom-data
+		$metadata['custom-data']['options'] = $this->options;
+
+		return $metadata;
 	}
 
 	/**
